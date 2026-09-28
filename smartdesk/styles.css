@@ -1,0 +1,189 @@
+/* ==========================================
+   1. CONFIGURAÇÕES GERAIS E BODY
+   ========================================== */
+body {
+    background: #1e293b;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* ==========================================
+   2. TOPO / CABEÇALHO
+   ========================================== */
+.topo {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin: 20px;
+    padding: 20px;
+}
+
+.topo h1 {
+    font-family: "Roboto", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: normal; /* Corrigido de 'weight' para 'normal' */
+    font-style: normal;
+    font-variation-settings: "wdth" 100;
+    color: rgb(136, 255, 176);
+    text-align: center;
+    font-size: 50px;
+    margin-bottom: 10px;
+}
+
+.topo p {
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    color: #fff;
+    text-align: center;
+    font-size: 20px;
+    margin-top: 0;
+}
+
+/* ==========================================
+   3. FORMULÁRIO e INPUTS
+   ========================================== */
+.form {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 15px; /* Cria um espaçamento automático entre os inputs */
+    
+    margin: 40px auto; /* Centraliza o formulário horizontalmente na tela */
+    width: 90%;
+    max-width: 450px; /* Limita o tamanho horizontal para não ficar gigante */
+    padding: 30px;
+    
+    background-color: #fff;
+    border-radius: 16px;
+    box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+}
+
+.form input {
+    width: 100%; /* Ocupa toda a largura interna disponível do formulário */
+    padding: 15px;
+    border: none;
+    border-radius: 12px;
+    background: #0f172a;
+    color: white;
+    font-size: 16px;
+    outline: none;
+    box-sizing: border-box; /* Garante que o padding não quebre a largura */
+}
+
+/* ==========================================
+   4. TELA DE CARREGAMENTO (LOADING)
+   ========================================== */
+.carregamento {
+    display: none;
+    text-align: center;
+    margin: 30px auto;
+    padding: 25px;
+    color: #fff;
+    background: #1e293b;
+    border-radius: 15px;
+    max-width: 350px;
+}
+
+.carregamento.ativo {
+    display: block;
+}
+
+.robo {
+    font-size: 50px;
+    animation: flutuar 1.5s ease-in-out infinite;
+}
+
+.carregamento h3 {
+    margin: 15px 0;
+    color: #60a5fa;
+}
+
+.carregamento p {
+    color: #cbd5e1;
+    font-size: 14px;
+}
+
+/* Pontos Animados do Loading */
+.pontos {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    margin: 20px 0;
+}
+
+.pontos span {
+    width: 10px;
+    height: 10px;
+    background: #3b82f6;
+    border-radius: 50%;
+    animation: pulsar 1.2s infinite;
+}
+
+.pontos span:nth-child(2) {
+    animation-delay: 0.2s;
+}
+
+.pontos span:nth-child(3) {
+    animation-delay: 0.4s;
+}
+
+/* ==========================================
+   5. ANIMAÇÕES (KEYFRAMES)
+   ========================================== */
+@keyframes pulsar {
+    0%, 60%, 100% {
+        opacity: 0.3;
+        transform: translateY(0);
+    }
+    30% {
+        opacity: 1;
+        transform: translateY(-8px);
+    }
+}
+
+@keyframes flutuar {
+    0%, 100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-10px);
+    }
+}
+/* ==========================================
+   4. BOTÃO DO FORMULÁRIO
+   ========================================== */
+.form button {
+    width: 100%;
+    padding: 15px;
+    margin-top: 10px; /* Cria um espaço entre o input e o botão */
+    
+    background: #3b82f6; /* Azul moderno, combinando com os pontos de loading */
+    color: #ffffff;
+    font-family: "Roboto", sans-serif;
+    font-size: 16px;
+    font-weight: 600;
+    
+    border: none;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: all 0.3s ease; /* Transição suave para os efeitos de hover */
+    box-sizing: border-box;
+}
+
+/* Efeito ao passar o mouse por cima */
+.form button:hover {
+    background: #2563eb; /* Azul um pouco mais escuro */
+    transform: translateY(-2px); /* Efeito flutuante discreto */
+    box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3); /* Sombra brilhante azul */
+}
+
+/* Efeito ao clicar no botão */
+.form button:active {
+    transform: translateY(0); /* Volta para a posição original */
+    box-shadow: none;
+}
+.form label{
+  font-family:   "Roboto", sans-serif;
+}

@@ -1,116 +1,76 @@
 <?php
+require_once "proteger.php";
+header("Content-Type: application/json; charset=UTF-8");
+
+function responder($dados, $status = 200) {
+    http_response_code($status);
+    echo json_encode($dados, JSON_UNESCAPED_UNICODE);
+    exit;
+}
 
 if ($_SERVER["REQUEST_METHOD"] !== "POST") {
-    die("Acesso inválido.");
+    responder(["erro" => "Método inválido."], 405);
 }
 
-if (!isset($_POST["pergunta"])) {
-    die("Nenhuma pergunta foi enviada.");
-}
-
-$pergunta = trim($_POST["pergunta"]);
+$pergunta = trim($_POST["pergunta"] ?? "");
 
 if ($pergunta === "") {
-    die("Digite uma pergunta.");
+    responder(["erro" => "Digite uma pergunta."], 400);
 }
 
+$token = "seu_token";
 
-// SUA CHAVE DO HUGGING FACE
-
-
-
-// API DO HUGGING FACE
 $url = "https://router.huggingface.co/v1/chat/completions";
 
-
-// Dados enviados para a IA
 $dados = [
-    "model" => "google/gemma-3-4b-it",
-
+    "model" => "openai/gpt-oss-120b:fastest",
     "messages" => [
         [
             "role" => "system",
-            "content" => "Você é um especialista em hardware de computadores. 
-            Responda de forma simples, clara e objetiva."
+            "content" => "Você é um tutor de hardware. Responda em português brasileiro de forma simples e didática."
         ],
         [
             "role" => "user",
             "content" => $pergunta
         ]
     ],
-
     "stream" => false
 ];
 
-
-// Inicia CURL
 $ch = curl_init($url);
 
-curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-
-curl_setopt($ch, CURLOPT_POST, true);
-
-
-// Cabeçalhos
-curl_setopt($ch, CURLOPT_HTTPHEADER, [
-    "Authorization: Bearer " . $apiKey,
-    "Content-Type: application/json"
+curl_setopt_array($ch, [
+    CURLOPT_POST => true,
+    CURLOPT_RETURNTRANSFER => true,
+    CURLOPT_HTTPHEADER => [
+        "Authorization: Bearer " . $token,
+        "Content-Type: application/json"
+    ],
+    CURLOPT_POSTFIELDS => json_encode($dados),
+    CURLOPT_TIMEOUT => 120
 ]);
 
-
-// Envia os dados
-curl_setopt(
-    $ch,
-    CURLOPT_POSTFIELDS,
-    json_encode($dados)
-);
-
-
-// Executa
 $resposta = curl_exec($ch);
-
-
-// Verifica erro do CURL
-if ($resposta === false) {
-
-    die("Erro no CURL: " . curl_error($ch));
-
-}
+$erro = curl_error($ch);
+$status = curl_getinfo($ch, CURLINFO_HTTP_CODE);
 
 curl_close($ch);
 
-
-// Converte JSON
-$resultado = json_decode($resposta, true);
-
-
-// Interface
-echo "<h1>🤖 Tutor IA de Hardware</h1>";
-
-
-// Verifica resposta
-if (isset($resultado["choices"][0]["message"]["content"])) {
-
-    $texto = $resultado["choices"][0]["message"]["content"];
-
-    echo "<h2>Resposta da IA:</h2>";
-
-    echo "<p>";
-    echo nl2br(htmlspecialchars($texto));
-    echo "</p>";
-
-} else {
-
-    echo "<h2>Erro na API:</h2>";
-
-    echo "<pre>";
-    print_r($resultado);
-    echo "</pre>";
+if ($resposta === false) {
+    responder(["erro" => "Falha na conexão: " . $erro], 500);
 }
 
+$resultado = json_decode($resposta, true);
 
-echo '<br>';
+if ($status < 200 || $status >= 300) {
+    responder([
+        "erro" => $resultado["error"]["message"]
+            ?? "Erro ao consultar a inteligência artificial."
+    ], $status);
+}
 
-echo '<a href="index.php">
-        Fazer outra pergunta
-      </a>';
+$texto = $resultado["choices"][0]["message"]["content"] ?? "";
+
+responder([
+    "resposta" => $texto
+]);
