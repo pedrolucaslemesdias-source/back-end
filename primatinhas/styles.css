@@ -1,0 +1,368 @@
+/* ==========================================================================
+   1. VARIÁVEIS, FONTE E RESETS
+   ========================================================================== */
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
+
+:root {
+    --bg-dark: #07090e;
+    --bg-card: rgba(18, 26, 43, 0.65);
+    --bg-input: rgba(10, 15, 26, 0.85);
+    
+    --primary: #3b82f6;
+    --primary-gradient: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
+    --primary-glow: rgba(59, 130, 246, 0.4);
+    
+    --accent: #10b981;
+    --accent-glow: rgba(16, 185, 129, 0.25);
+    
+    --text-heading: #f8fafc;
+    --text-body: #94a3b8;
+    --text-subtle: #64748b;
+    
+    --border-card: rgba(255, 255, 255, 0.08);
+    --border-focus: #3b82f6;
+    
+    --radius-main: 24px;
+    --radius-inner: 14px;
+    
+    --transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+/* ==========================================================================
+   2. BODY & EFEITO DE ILUMINAÇÃO DE FUNDO (GLOW ORBS)
+   ========================================================================== */
+body {
+    min-height: 100vh;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    background-color: var(--bg-dark);
+    background-image: 
+        radial-gradient(circle at 20% 15%, rgba(59, 130, 246, 0.15) 0%, transparent 40%),
+        radial-gradient(circle at 80% 85%, rgba(16, 185, 129, 0.1) 0%, transparent 40%);
+    background-attachment: fixed;
+    color: var(--text-heading);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 24px 16px;
+    line-height: 1.6;
+    overflow-x: hidden;
+}
+
+/* ==========================================================================
+   3. CABEÇALHO / TOPO
+   ========================================================================== */
+.topo {
+    text-align: center;
+    margin-bottom: 28px;
+    max-width: 580px;
+}
+
+.topo h1 {
+    font-size: 2.3rem;
+    font-weight: 800;
+    background: linear-gradient(135deg, #ffffff 30%, #60a5fa 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin-bottom: 10px;
+    letter-spacing: -0.02em;
+}
+
+.topo p {
+    color: var(--text-body);
+    font-size: 0.98rem;
+    font-weight: 400;
+}
+
+/* ==========================================================================
+   4. CARDS & FORMULÁRIOS (GLASSMORPHISM PREMIUM)
+   ========================================================================== */
+.container, .form {
+    width: 100%;
+    max-width: 480px;
+    background: var(--bg-card);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid var(--border-card);
+    padding: 36px 32px;
+    border-radius: var(--radius-main);
+    box-shadow: 
+        0 30px 60px -12px rgba(0, 0, 0, 0.6),
+        inset 0 1px 0 rgba(255, 255, 255, 0.1);
+    margin: 0 auto;
+    transition: var(--transition);
+}
+
+.container:hover, .form:hover {
+    border-color: rgba(255, 255, 255, 0.15);
+}
+
+.container h1 {
+    text-align: center;
+    font-size: 1.75rem;
+    font-weight: 800;
+    color: var(--text-heading);
+    margin-bottom: 18px;
+}
+
+.usuario {
+    text-align: center;
+    color: var(--text-body);
+    background: rgba(255, 255, 255, 0.04);
+    padding: 6px 16px;
+    border-radius: 50px;
+    width: fit-content;
+    margin: 0 auto 24px auto;
+    font-size: 0.875rem;
+    font-weight: 500;
+    border: 1px solid var(--border-card);
+}
+
+/* Inputs e Campos de Texto */
+label {
+    display: block;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--text-body);
+    margin-bottom: 8px;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+input[type="text"],
+input[type="password"],
+textarea {
+    width: 100%;
+    padding: 14px 18px;
+    border: 1px solid var(--border-card);
+    border-radius: var(--radius-inner);
+    background: var(--bg-input);
+    color: var(--text-heading);
+    font-size: 0.95rem;
+    font-family: inherit;
+    outline: none;
+    transition: var(--transition);
+}
+
+textarea {
+    min-height: 120px;
+    resize: vertical;
+}
+
+input:focus,
+textarea:focus {
+    border-color: var(--border-focus);
+    box-shadow: 0 0 0 4px var(--primary-glow);
+    background: rgba(15, 23, 42, 0.95);
+}
+
+/* ==========================================================================
+   5. BOTÃO PRINCIPAL COM ANIMAÇÃO SHINE
+   ========================================================================== */
+button, 
+.form button {
+    position: relative;
+    width: 100%;
+    margin-top: 18px;
+    padding: 15px;
+    border: none;
+    border-radius: var(--radius-inner);
+    background: var(--primary-gradient);
+    color: #ffffff;
+    font-family: inherit;
+    font-size: 0.98rem;
+    font-weight: 700;
+    cursor: pointer;
+    overflow: hidden;
+    transition: var(--transition);
+    box-shadow: 0 6px 20px var(--primary-glow);
+}
+
+/* Efeito de brilho que passa pelo botão ao dar HOVER */
+button::before,
+.form button::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+        90deg,
+        transparent,
+        rgba(255, 255, 255, 0.25),
+        transparent
+    );
+    transition: left 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+button:hover::before,
+.form button:hover::before {
+    left: 100%;
+}
+
+button:hover, 
+.form button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 28px var(--primary-glow);
+}
+
+button:active, 
+.form button:active {
+    transform: translateY(0);
+    box-shadow: 0 4px 12px var(--primary-glow);
+}
+
+button:disabled {
+    opacity: 0.5;
+    cursor: wait;
+    transform: none;
+}
+
+/* Botão de Sair (Fixado) */
+.btn {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 9999;
+    padding: 8px 18px;
+    background: rgba(239, 68, 68, 0.12);
+    color: #f87171;
+    border: 1px solid rgba(239, 68, 68, 0.25);
+    border-radius: 8px;
+    cursor: pointer;
+    width: auto;
+    font-size: 0.85rem;
+    font-weight: 600;
+    backdrop-filter: blur(8px);
+    transition: var(--transition);
+    box-shadow: none;
+}
+
+.btn::before {
+    display: none;
+}
+
+.btn:hover {
+    background: #ef4444;
+    color: #ffffff;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(239, 68, 68, 0.35);
+}
+
+/* ==========================================================================
+   6. TELA DE CARREGAMENTO & SPINNER
+   ========================================================================== */
+#carregamento, .carregamento {
+    display: none;
+    text-align: center;
+    margin-top: 24px;
+    padding: 28px 20px;
+    background: var(--bg-input);
+    border-radius: var(--radius-inner);
+    border: 1px solid var(--border-card);
+}
+
+.robo {
+    font-size: 48px;
+    display: inline-block;
+    animation: flutuar 2.2s ease-in-out infinite;
+}
+
+#carregamento h3 {
+    margin-top: 14px;
+    color: var(--primary);
+    font-size: 1.05rem;
+    font-weight: 700;
+}
+
+#carregamento p {
+    margin-top: 4px;
+    color: var(--text-subtle);
+    font-size: 0.85rem;
+}
+
+/* Pontos Animados */
+.pontos {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    margin: 16px 0;
+}
+
+.pontos span {
+    width: 8px;
+    height: 8px;
+    background: var(--primary);
+    border-radius: 50%;
+    animation: pulsar 1.2s infinite ease-in-out;
+}
+
+.pontos span:nth-child(2) { animation-delay: 0.2s; }
+.pontos span:nth-child(3) { animation-delay: 0.4s; }
+
+/* ==========================================================================
+   7. RESPOSTA DA INTELIGÊNCIA ARTIFICIAL
+   ========================================================================== */
+#areaResposta {
+    display: none;
+    margin-top: 24px;
+    padding: 24px;
+    background: var(--bg-input);
+    border-radius: var(--radius-inner);
+    border: 1px solid var(--border-card);
+    border-left: 4px solid var(--accent);
+    box-shadow: 0 10px 30px -5px var(--accent-glow);
+    animation: surgir 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+#areaResposta h2 {
+    color: var(--accent);
+    margin-bottom: 12px;
+    font-size: 1.05rem;
+    font-weight: 700;
+}
+
+#respostaIA {
+    color: var(--text-heading);
+    font-size: 0.95rem;
+    line-height: 1.7;
+    white-space: pre-wrap;
+    word-break: break-word;
+}
+
+/* ==========================================================================
+   8. ANIMAÇÕES (KEYFRAMES)
+   ========================================================================== */
+@keyframes pulsar {
+    0%, 80%, 100% {
+        opacity: 0.25;
+        transform: scale(0.75);
+    }
+    40% {
+        opacity: 1;
+        transform: scale(1.15);
+    }
+}
+
+@keyframes flutuar {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-8px); }
+}
+
+@keyframes surgir {
+    from {
+        opacity: 0;
+        transform: translateY(12px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
